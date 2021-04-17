@@ -1,0 +1,104 @@
+.loginContent {
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  backdrop-filter: blur(10px);
+  top: 0;
+  left: 0;
+}
+.loginContent_loginFrame {
+  width: 500px;
+  height: 300px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 30px;
+}
+.loginContent_loginFrame_title {
+  font-family: "Noto Sans TC", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 200;
+  margin: 0 0 10px 0;
+}
+
+.loginContent_inputBar {
+  display: flex;
+  background-color: #fff;
+  width: 100%;
+  height: 3rem;
+  font-weight: 100;
+  padding: 0 10px;
+  align-items: center;
+  border: 1px solid #dfdfdf;
+  border-radius: 2px;
+  font-family: "Noto Sans TC", sans-serif;
+  font-weight: 300;
+  font-size: 1.4rem;
+  &::placeholder {
+    opacity: 0.7;
+  }
+  &-error {
+    z-index: 100;
+    border: 1px solid #ff424f;
+    background-color: #fff6f7;
+  }
+}
+.loginContent_errorText {
+  font-family: "Noto Sans TC", sans-serif;
+  color: #ff424f;
+  font-size: 1.2rem;
+  margin: 0 0 15px 0;
+}
+.loginContent_loginFrame_errorText {
+  font-family: "Noto Sans TC", sans-serif;
+  color: #ff424f;
+  font-size: 1.2rem;
+}
+
+.loginContent_submitBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 4rem;
+  font-family: "Noto Sans TC", sans-serif;
+  font-size: 1.4rem;
+  color: #fff;
+  background-color: #51a0e5;
+  border-radius: 2px;
+  &-allow {
+    cursor: pointer;
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+  &-not-allow {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+}
+.loginContent_subcontent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 150px;
+  margin: 30px 0 0 0;
+  border-top: 1px solid #00000042;
+}
+.loginContent_subcontent_subtitle {
+  font-family: "Noto Sans TC", sans-serif;
+  color: #00000077;
+  font-size: 1.4rem;
+  font-weight: 100;
+}
+.loginContent_subcontent_signup {
+  cursor: pointer;
+  font-family: "Noto Sans TC", sans-serif;
+  color: #ee4d2d;
+  font-size: 1.4rem;
+  font-weight: 100;
+}
