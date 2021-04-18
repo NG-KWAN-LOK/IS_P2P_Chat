@@ -1,25 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { USER_CONNECTED, LOGOUT, VERIFY_USER } from "../../constants/Events";
 
 export const CoreLayoutSlice = createSlice({
   name: "coreLayout",
   initialState: {
     myUser: null,
+    myKeys: {},
     activeUser: null,
     connectedUsers: {},
   },
   reducers: {
     setUser: (state, action) => {
-      console.log("setUser");
+      //console.log("setUser");
       state.myUser = action.payload;
     },
     setActiveUser: (state, action) => {
-      console.log("setActiveUser");
+      //console.log("setActiveUser");
       state.activeUser = action.payload;
     },
     setConnectedUsers: (state, action) => {
-      console.log("setConnectedUsers");
+      //console.log("setConnectedUsers");
       state.connectedUsers = action.payload;
+    },
+    setMyKeys: (state, action) => {
+      console.log("setMyKeys");
+      state.myKeys = action.payload;
+      console.log(state.myKeys);
     },
   },
 });
@@ -29,6 +34,7 @@ export const {
   setUser,
   setActiveUser,
   setConnectedUsers,
+  setMyKeys,
 } = CoreLayoutSlice.actions;
 
 export default CoreLayoutSlice.reducer;

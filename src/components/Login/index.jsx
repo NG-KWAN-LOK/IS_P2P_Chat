@@ -1,12 +1,10 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setUser } from "../../container/CoreLayout/reducer";
+import React, { useContext, useState } from "react";
+import { SocketContext } from "../../contexts/UseSocket";
 
 import styles from "./styles.module.scss";
 
-const { VERIFY_USER } = require("../../constants/Events");
-
-const Login = ({ verifyUser }) => {
+const Login = () => {
+  const { verifyUser } = useContext(SocketContext);
   const [username, setUsername] = useState("");
   const [userNameBlankText, setUserNameBlankText] = useState("");
   const [wrongText, setwWongText] = useState("　");

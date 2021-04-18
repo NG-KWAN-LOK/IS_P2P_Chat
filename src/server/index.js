@@ -62,13 +62,12 @@ io.on("connection", (socket) => {
     console.log(connectedUsers);
   });
 
-  socket.on(PRIVATE_MESSAGE, ({ reciever, sender, message }) => {
-    if (reciever in connectedUsers) {
-      const recieverSocket = connectedUsers[reciever].socketId;
-      const newChat = { reciever, sender, message };
-      socket.to(recieverSocket).emit(PRIVATE_MESSAGE, newChat);
-    } else {
-    }
+  socket.on(PRIVATE_MESSAGE, ({ reciever, sender, message }, callback) => {
+    console.log(reciever.socketId, sender.socketId, message);
+    const newSendChat = { chatRoomUser: sender, sender, message, id: uuid() };
+    const newChat = { chatRoomUser: reciever, sender, message, id: uuid() };
+    callback(newChat);
+    socket.to(reciever.socketId).emit(PRIVATE_MESSAGE, newSendChat);
   });
 
   function addUser(userList, user) {

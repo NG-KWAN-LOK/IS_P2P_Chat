@@ -1,17 +1,26 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setActiveUser } from "../../container/CoreLayout/reducer";
 
 import cx from "classnames";
-import LatestMessagesContext from "../../contexts/LatestMessages/LatestMessages";
 import UserProfile from "../../common/components/UserProfile/UserProfile";
-import USERS from "../../constants/users";
 import "./_user-list.scss";
 
 function User({ user }) {
   const dispatch = useDispatch();
   const activeUser = useSelector((state) => state.coreLayout.activeUser);
-  const { messages } = useContext(LatestMessagesContext);
+  const messageListId = useSelector((state) => state.message.messageListId);
+  const messageData = useSelector((state) => state.message.messageData);
+  const [isUnreadMessage, setIsUnReadMessage] = useState(false);
+  useEffect(() => {
+    console.log(user.name + "update");
+    if (activeUser != user) setIsUnReadMessage(true);
+  }, [messageListId[user.userId]]);
+
+  useEffect(() => {
+    if (activeUser === user) setIsUnReadMessage(false);
+  }, [activeUser]);
+
   return (
     <div
       className={
@@ -24,34 +33,53 @@ function User({ user }) {
       <UserProfile icon={user.icon} name={user.name} color={user.color} />
       <div className='user-list__users__user__right-content'>
         <div className='user-list__users__user__title'>
-          <p>{user.name}</p>
+          <div className='user-list__users__user__title__userName'>
+            {user.name}
+          </div>
+          <div className='user-list__users__user__title__newMessageNotification'>
+            {isUnreadMessage && (
+              <div className='user-list__users__user__title__newMessageNotification__point'></div>
+            )}
+          </div>
           <p
             className={cx({ "user-list__users__user__online": user.isOnline })}
           ></p>
         </div>
-        <p>{messages[user.userId]}</p>
+        <p>
+          {/* {messageListId[user.userId] &&
+            messageData[
+              messageListId[user.userId][messageListId[user.userId].length - 1]
+            ].message} */}
+        </p>
       </div>
     </div>
   );
 }
 
 export default function UserList() {
+  const myUser = useSelector((state) => state.coreLayout.myUser);
   const connectedUsers = useSelector(
     (state) => state.coreLayout.connectedUsers
   );
-  console.log(connectedUsers);
-  console.log(USERS);
   return (
     <div className='user-list'>
       <div className='user-list__header'>
         <div className='user-list__header__left'>
-          <p>All Messages</p>
+          {myUser && (
+            <UserProfile
+              icon={myUser.icon}
+              name={myUser.name}
+              color={myUser.color}
+            />
+          )}
+          {myUser && <p>{myUser.name}</p>}
           <i className='fas fa-chevron-down' />
         </div>
         <i className='fas fa-cog' />
       </div>
       <div className='user-list__users'>
         {Object.values(connectedUsers).map((user) => {
+          if (user.name === myUser.name) return;
           return <User key={user.name} user={user} />;
         })}
       </div>

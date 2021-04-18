@@ -122,7 +122,8 @@
 
       &__title {
         display: flex;
-
+        position: relative;
+        width: 100%;
         > p {
           margin: 0;
         }
@@ -130,6 +131,17 @@
         > p:last-of-type {
           margin-left: auto;
           color: #94a2ae;
+        }
+        &__newMessageNotification {
+          display: flex;
+          position: absolute;
+          right: 0;
+          &__point {
+            width: 13px;
+            height: 13px;
+            background-color: #ff0000;
+            border-radius: 50%;
+          }
         }
       }
 

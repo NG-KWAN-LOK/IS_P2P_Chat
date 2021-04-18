@@ -1,24 +1,26 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import cx from "classnames";
 
-const ME = "me";
-
-export default function Message({ nextMessage, message }) {
+function Message({ nextMessage, message, sender }) {
+  const myUser = useSelector((state) => state.coreLayout.myUser);
+  console.log(message);
   return (
     <p
       className={cx(
         "messages__message",
         "animate__animated animate__rubberBand",
         {
-          "messages__message--me": message.user === ME,
+          "messages__message--me": sender.userId === myUser.userId,
           "messages__message--last":
-            (!nextMessage && message.user === ME) ||
-            (nextMessage && nextMessage.user !== message.user),
+            (!nextMessage && sender === myUser.userId) ||
+            (nextMessage && nextMessage.user !== sender),
         }
       )}
-      key={message.id}
+      //key={message.id}
     >
-      {message.message}
+      {message}
     </p>
   );
 }
+export default React.memo(Message);
