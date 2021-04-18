@@ -5,7 +5,7 @@ import React, {
   useRef,
   useContext,
 } from "react";
-import useSound from "use-sound";
+//import useSound from "use-sound";
 import io from "socket.io-client";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser, setConnectedUsers } from "../../container/CoreLayout/reducer";
@@ -39,9 +39,9 @@ export const useSocket = () => {
   const myKeys = useSelector((state) => state.coreLayout.myKeys);
   const messageListId = useSelector((state) => state.message.messageListId);
   const dispatch = useDispatch();
-  const [playMessageIncome] = useSound(config.MESSAGE_INCOME_URL);
-  const [playSend] = useSound(config.SEND_AUDIO_URL);
-  const [playReceive] = useSound(config.RECEIVE_AUDIO_URL);
+  //const [playMessageIncome] = useSound(config.MESSAGE_INCOME_URL);
+  //const [playSend] = useSound(config.SEND_AUDIO_URL);
+  //const [playReceive] = useSound(config.RECEIVE_AUDIO_URL);
 
   const socketRef = useRef();
 
@@ -91,7 +91,7 @@ export const useSocket = () => {
     console.log("isFocus?" + isFocus);
     if (!isFocus) {
       document.title = "🔴 Chatter";
-      playMessageIncome();
+      //playMessageIncome();
     }
   }, [messageListId]);
 
@@ -139,7 +139,7 @@ export const useSocket = () => {
         //console.log(respondMessage);
         respondMessage.message = message;
         dispatch(receivePlaintextMessage(respondMessage));
-        playSend();
+        //playSend();
       }
     );
   });
