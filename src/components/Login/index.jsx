@@ -15,6 +15,7 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log("press");
     verifyUser(username).then(
       (result) =>
         !result && setwWongText("Nickname is exist, please try another one")
