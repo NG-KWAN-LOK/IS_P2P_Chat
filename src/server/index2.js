@@ -17,7 +17,7 @@ const {
 } = require("../constants/Events");
 const io = (module.exports.io = require("socket.io")(server));
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3231;
 
 app.use(express.static(path.join(__dirname, "/../../build")));
 
