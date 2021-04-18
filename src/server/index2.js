@@ -15,7 +15,11 @@ const {
   PRIVATE_MESSAGE,
   NEW_CHAT_USER,
 } = require("../constants/Events");
-const io = (module.exports.io = require("socket.io")(server));
+const io = (module.exports.io = require("socket.io")(server, {
+  cors: {
+    origin: "*",
+  },
+}));
 
 const PORT = process.env.PORT || 3231;
 
