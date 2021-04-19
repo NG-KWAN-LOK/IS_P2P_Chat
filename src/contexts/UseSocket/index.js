@@ -30,7 +30,10 @@ import {
 } from "../../constants/Events";
 const socketUrl = "/";
 
-export const SocketContext = React.createContext();
+export const SocketContext = React.createContext({
+  verifyUser: () => {},
+  sendMessage: () => {},
+});
 
 export const useSocket = () => {
   const [isFocus, setIsFocus] = useState(true);
