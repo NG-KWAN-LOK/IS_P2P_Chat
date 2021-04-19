@@ -30,7 +30,10 @@ import {
 } from "../../constants/Events";
 const socketUrl = "/";
 
-export const SocketContext = React.createContext();
+export const SocketContext = React.createContext({
+  verifyUser: () => { },
+  sendMessage: () => { },
+});
 
 export const useSocket = () => {
   const [isFocus, setIsFocus] = useState(true);
@@ -47,7 +50,9 @@ export const useSocket = () => {
 
   useEffect(() => {
     const initSocket = () => {
-      const socket = io(socketUrl);
+      const socket = io(socketUrl, {
+        transports: ["websocket"] // or [ "websocket", "polling" ] (the order matters)
+      });
 
       socket.on("connect", () => {
         if (myUser) {
