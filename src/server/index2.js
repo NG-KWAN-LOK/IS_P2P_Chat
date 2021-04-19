@@ -1,3 +1,4 @@
+'use strict';
 var path = require("path");
 var express = require("express");
 const app = express();
@@ -23,7 +24,7 @@ const io = (module.exports.io = require("socket.io")(server, {
 
 io.set('transports', ['websocket']);
 
-const PORT = process.env.PORT || 3231;
+const PORT = process.env.PORT || 4000;
 
 app.use(express.static(path.join(__dirname, "/../../build")));
 
@@ -101,6 +102,6 @@ io.on("connection", (socket) => {
   }
 });
 
-server.listen(process.env.PORT, () => {
+app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
