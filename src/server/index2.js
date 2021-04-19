@@ -22,7 +22,6 @@ const io = (module.exports.io = require("socket.io")(server, {
   },
 }));
 
-io.set('transports', ['websocket']);
 
 const PORT = process.env.PORT || 4000;
 
@@ -102,6 +101,6 @@ io.on("connection", (socket) => {
   }
 });
 
-app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT || 4000, () => {
   console.log(`Listening on port ${PORT}`);
 });
