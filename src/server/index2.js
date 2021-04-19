@@ -99,6 +99,6 @@ io.on("connection", (socket) => {
   }
 });
 
-server.listen(PORT, () => {
+server.listen(process.env.PORT || 3231, () => {
   console.log(`Listening on port ${PORT}`);
 });
