@@ -3,7 +3,7 @@ var path = require("path");
 var express = require("express");
 const app = express();
 const server = require("http").createServer(app).listen(process.env.PORT || 8080, () => {
-  console.log(`Listening on port ${PORT}`);
+  console.log(`Listening on port ${process.env.PORT || PORT}`);
 });
 const { uuid } = require("uuidv4");
 const {
