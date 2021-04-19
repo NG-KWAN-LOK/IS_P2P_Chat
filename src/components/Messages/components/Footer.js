@@ -34,8 +34,8 @@ export default function Footer() {
         <i className='mdi mdi-ticket-outline' />
         <button
           onClick={() => {
+            setMessage("");
             sendMessage(message);
-            setMessage(null);
           }}
           disabled={!message}
         >
