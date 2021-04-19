@@ -1,10 +1,4 @@
 'use strict';
-var path = require("path");
-var express = require("express");
-const app = express();
-const server = require("http").createServer(app).listen(process.env.PORT || 8080, () => {
-  console.log(`Listening on port ${process.env.PORT || PORT}`);
-});
 const { uuid } = require("uuidv4");
 const {
   VERIFY_USER,
@@ -18,16 +12,25 @@ const {
   PRIVATE_MESSAGE,
   NEW_CHAT_USER,
 } = require("../constants/Events");
+
+var path = require("path");
+var express = require("express");
+const app = express();
+
+app.use(express.static(path.join(__dirname, '/../../build')));
+const PORT = process.env.PORT || 8080;
+app.set('port', PORT);
+var server = app.listen(app.get('port'), function () {
+  console.log('listening on port ', server.address().port);
+});
+app.get("*", (request, response) => {
+  response.sendFile(path.join(__dirname, "/../../build", "index.html"));
+});
 const io = (module.exports.io = require("socket.io")(server, {
   cors: {
     origin: "*",
   },
 }));
-
-
-const PORT = process.env.PORT || 8080;
-
-app.use(express.static(path.join(__dirname, "/../../build")));
 
 let connectedUsers = {};
 io.on("connection", (socket) => {
