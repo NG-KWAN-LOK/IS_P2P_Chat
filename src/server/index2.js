@@ -2,7 +2,9 @@
 var path = require("path");
 var express = require("express");
 const app = express();
-const server = require("http").Server(app);
+const server = require("http").createServer(app).listen(process.env.PORT || 8080, () => {
+  console.log(`Listening on port ${PORT}`);
+});
 const { uuid } = require("uuidv4");
 const {
   VERIFY_USER,
@@ -23,7 +25,7 @@ const io = (module.exports.io = require("socket.io")(server, {
 }));
 
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 8080;
 
 app.use(express.static(path.join(__dirname, "/../../build")));
 
@@ -99,8 +101,4 @@ io.on("connection", (socket) => {
   function isUser(userList, username) {
     return username in userList;
   }
-});
-
-server.listen(process.env.PORT || 4000, () => {
-  console.log(`Listening on port ${PORT}`);
 });
