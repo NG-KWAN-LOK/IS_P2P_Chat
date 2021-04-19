@@ -1,4 +1,5 @@
 import EthCrypto from "eth-crypto";
+import CryptoJS, { AES } from "crypto-js";
 
 export const decryptMessageWithPrivateKey = async (message, privateKey) => {
   console.log(message, privateKey);
@@ -9,19 +10,32 @@ export const decryptMessageWithPrivateKey = async (message, privateKey) => {
   return plainttext;
 };
 
-export const decryptMessageWithPublicKey = async (message, publicKey) => {
-  console.log(message, publicKey);
-  const plainttext = await EthCrypto.decryptWithPublicKey(
-    publicKey, // privateKey
-    message // message
-  );
-  return plainttext;
-};
-
-export const encryptMessage = async (message, publicKey) => {
+export const encryptMessageWithPublicKey = async (message, publicKey) => {
   const chipertext = await EthCrypto.encryptWithPublicKey(
     publicKey, // publicKey
     message // message
   );
   return chipertext;
+};
+
+export const encryptMessageWithAESKey = (message, aesKey) => {
+  return AES.encrypt(message, aesKey).toString();
+};
+
+export const decryptMessageWithAESKey = (ciphertext, aesKey) => {
+  const bytes = AES.decrypt(ciphertext, aesKey);
+  return bytes.toString(CryptoJS.enc.Utf8);
+};
+
+export const generateAESKeys = () => {
+  const length = 32;
+  var randomChars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(){}_+=-";
+  var result = "";
+  for (var i = 0; i < length; i++) {
+    result += randomChars.charAt(
+      Math.floor(Math.random() * randomChars.length)
+    );
+  }
+  return result;
 };

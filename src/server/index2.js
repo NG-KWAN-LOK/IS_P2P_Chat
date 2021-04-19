@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 const { uuid } = require("uuidv4");
 const {
   VERIFY_USER,
@@ -17,11 +17,11 @@ var path = require("path");
 var express = require("express");
 const app = express();
 
-app.use(express.static(path.join(__dirname, '/../../build')));
-const PORT = process.env.PORT || 3000;
-app.set('port', PORT);
-var server = app.listen(app.get('port'), function () {
-  console.log('listening on port ', server.address().port);
+app.use(express.static(path.join(__dirname, "/../../build")));
+const PORT = process.env.PORT || 4000;
+app.set("port", PORT);
+var server = app.listen(app.get("port"), function () {
+  console.log("listening on port ", server.address().port);
 });
 app.get("*", (request, response) => {
   response.sendFile(path.join(__dirname, "/../../build", "index.html"));
@@ -72,13 +72,29 @@ io.on("connection", (socket) => {
     console.log(connectedUsers);
   });
 
-  socket.on(PRIVATE_MESSAGE, ({ reciever, sender, message }, callback) => {
-    console.log(reciever.socketId, sender.socketId, message);
-    const newSendChat = { chatRoomUser: sender, sender, message, id: uuid() };
-    const newChat = { chatRoomUser: reciever, sender, message, id: uuid() };
-    callback(newChat);
-    socket.to(reciever.socketId).emit(PRIVATE_MESSAGE, newSendChat);
-  });
+  socket.on(
+    PRIVATE_MESSAGE,
+    ({ reciever, sender, message, aesKey }, callback) => {
+      console.log(reciever.socketId, sender.socketId, message);
+      console.log("aesKey", aesKey);
+      const newSendChat = {
+        chatRoomUser: sender,
+        sender,
+        message,
+        id: uuid(),
+        aesKey,
+      };
+      const newChat = {
+        chatRoomUser: reciever,
+        sender,
+        message,
+        id: uuid(),
+        aesKey,
+      };
+      callback(newChat);
+      socket.to(reciever.socketId).emit(PRIVATE_MESSAGE, newSendChat);
+    }
+  );
 
   function addUser(userList, user) {
     let newList = Object.assign({}, userList);

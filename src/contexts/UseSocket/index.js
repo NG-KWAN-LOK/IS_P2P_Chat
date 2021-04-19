@@ -12,8 +12,10 @@ import { setUser, setConnectedUsers } from "../../container/CoreLayout/reducer";
 import { receivePlaintextMessage } from "../../components/Messages/reducer";
 import {
   decryptMessageWithPrivateKey,
-  decryptMessageWithPublicKey,
-  encryptMessage,
+  encryptMessageWithPublicKey,
+  encryptMessageWithAESKey,
+  decryptMessageWithAESKey,
+  generateAESKeys,
 } from "../../tools/index";
 import config from "../../config";
 
@@ -28,12 +30,9 @@ import {
   PRIVATE_MESSAGE,
   NEW_CHAT_USER,
 } from "../../constants/Events";
-const socketUrl = "/";
+const socketUrl = "http://localhost:4000/";
 
-export const SocketContext = React.createContext({
-  verifyUser: () => { },
-  sendMessage: () => { },
-});
+export const SocketContext = React.createContext({});
 
 export const useSocket = () => {
   const [isFocus, setIsFocus] = useState(true);
@@ -51,7 +50,7 @@ export const useSocket = () => {
   useEffect(() => {
     const initSocket = () => {
       const socket = io(socketUrl, {
-        transports: ["websocket"] // or [ "websocket", "polling" ] (the order matters)
+        transports: ["websocket"], // or [ "websocket", "polling" ] (the order matters)
       });
 
       socket.on("connect", () => {
@@ -66,16 +65,19 @@ export const useSocket = () => {
     };
     initSocket();
     socketRef.current.on(PRIVATE_MESSAGE, async (message) => {
-      const decryptedMessage = {
+      console.log("received message", message);
+      const decryptedAESKey = await decryptMessageWithPrivateKey(
+        message.aesKey,
+        myKeys.privateKey
+      );
+      console.log("decryptedAESKey", decryptedAESKey);
+      const decryptedMessageByAES = {
         ...message,
-        message: await decryptMessageWithPrivateKey(
-          message.message,
-          myKeys.privateKey
-        ),
+        message: decryptMessageWithAESKey(message.message, decryptedAESKey),
       };
 
-      console.log(decryptedMessage);
-      dispatch(receivePlaintextMessage(decryptedMessage));
+      console.log("decryptedMessageByAES", decryptedMessageByAES);
+      dispatch(receivePlaintextMessage(decryptedMessageByAES));
     });
     const onFocus = () => {
       setIsFocus(true);
@@ -128,20 +130,25 @@ export const useSocket = () => {
 
   const sendMessage = useCallback(async (message) => {
     console.log(message, myUser.socketId, activeUser.socketId);
-    const encryptedMessage = await encryptMessage(
-      message,
+    const aesKey = generateAESKeys();
+    console.log("aesKey", aesKey);
+    const encryptedAESByRSA = await encryptMessageWithPublicKey(
+      aesKey,
       activeUser.publicKey
     );
-    console.log(encryptedMessage);
+    console.log("encryptedAESByRSA", encryptedAESByRSA);
+    const encryptedMessageByAES = encryptMessageWithAESKey(message, aesKey);
+    console.log("encryptedMessageByAES", encryptedMessageByAES);
     socketRef.current.emit(
       PRIVATE_MESSAGE,
       {
-        message: encryptedMessage,
+        aesKey: encryptedAESByRSA,
+        message: encryptedMessageByAES,
         sender: myUser,
         reciever: activeUser,
       },
       (respondMessage) => {
-        //console.log(respondMessage);
+        console.log("respondMessage ", respondMessage);
         respondMessage.message = message;
         dispatch(receivePlaintextMessage(respondMessage));
         playSend();

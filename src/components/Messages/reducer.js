@@ -1,4 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import {
+  decryptMessageWithPrivateKey,
+  decryptMessageWithAESKey,
+} from "../../tools/index";
 
 export const MessageSlice = createSlice({
   name: "message",
@@ -30,6 +34,6 @@ export const MessageSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { receivePlaintextMessage } = MessageSlice.actions;
+export const { setMyKeys, receivePlaintextMessage } = MessageSlice.actions;
 
 export default MessageSlice.reducer;
