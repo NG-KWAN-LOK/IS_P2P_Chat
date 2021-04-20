@@ -30,7 +30,7 @@ import {
   PRIVATE_MESSAGE,
   NEW_CHAT_USER,
 } from "../../constants/Events";
-const socketUrl = "http://localhost:4000/";
+const socketUrl = "/";
 
 export const SocketContext = React.createContext({});
 
@@ -79,6 +79,7 @@ export const useSocket = () => {
       console.log("decryptedMessageByAES", decryptedMessageByAES);
       dispatch(receivePlaintextMessage(decryptedMessageByAES));
     });
+
     const onFocus = () => {
       setIsFocus(true);
       document.title = "Chatter";
