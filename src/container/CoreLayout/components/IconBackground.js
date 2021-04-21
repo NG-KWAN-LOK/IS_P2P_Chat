@@ -36,7 +36,7 @@ function IconRow({ numberOfIcons }) {
   );
 }
 
-export default function IconBackground() {
+const IconBackground = () => {
   const { height, width } = document.body.getBoundingClientRect();
   const numberOfElsPerRow = parseInt((width / SPACING_PX).toFixed());
   const numberOfRows = parseInt((height / SPACING_PX).toFixed());
@@ -49,3 +49,5 @@ export default function IconBackground() {
     </div>
   )
 }
+
+export default React.memo(IconBackground)

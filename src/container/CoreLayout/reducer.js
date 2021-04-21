@@ -7,6 +7,7 @@ export const CoreLayoutSlice = createSlice({
     myKeys: {},
     activeUser: null,
     connectedUsers: {},
+    isPopUpQRCodeDisplay: false,
   },
   reducers: {
     setUser: (state, action) => {
@@ -22,10 +23,14 @@ export const CoreLayoutSlice = createSlice({
       state.connectedUsers = action.payload;
     },
     setMyKeys: (state, action) => {
-      console.log("setMyKeys");
+      //console.log("setMyKeys");
       state.myKeys = action.payload;
       console.log(state.myKeys);
     },
+    setIsPopUpQRCodeDisplay: (state, action) => {
+      console.log("setPopupQRCODE", action.payload);
+      state.isPopUpQRCodeDisplay = action.payload
+    }
   },
 });
 
@@ -34,7 +39,7 @@ export const {
   setUser,
   setActiveUser,
   setConnectedUsers,
-  setMyKeys,
+  setMyKeys, setIsPopUpQRCodeDisplay
 } = CoreLayoutSlice.actions;
 
 export default CoreLayoutSlice.reducer;

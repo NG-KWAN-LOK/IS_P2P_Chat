@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setActiveUser } from "../../container/CoreLayout/reducer";
 
 import cx from "classnames";
 import UserProfile from "../../common/components/UserProfile/UserProfile";
+import SettingMenu from "./SettingMenu"
 import "./_user-list.scss";
 
 function User({ user }) {
@@ -46,10 +47,10 @@ function User({ user }) {
           ></p>
         </div>
         <p>
-          {/* {messageListId[user.userId] &&
+          {messageListId[user.userId] &&
             messageData[
               messageListId[user.userId][messageListId[user.userId].length - 1]
-            ].message} */}
+            ].message}
         </p>
       </div>
     </div>
@@ -57,10 +58,19 @@ function User({ user }) {
 }
 
 export default function UserList() {
+  const [isDisplay, setIsDisplay] = useState(false);
+  const onChangeIsDisplay = useCallback(() => { toggleIsDisplay() })
   const myUser = useSelector((state) => state.coreLayout.myUser);
   const connectedUsers = useSelector(
     (state) => state.coreLayout.connectedUsers
   );
+  const toggleIsDisplay = () => {
+    setIsDisplay(isDisplay ? false : true)
+  }
+  const onClickSettingButton = () => {
+    console.log("onClick setting")
+    toggleIsDisplay()
+  }
   return (
     <div className='user-list'>
       <div className='user-list__header'>
@@ -75,7 +85,8 @@ export default function UserList() {
           {myUser && <p>{myUser.name}</p>}
           <i className='fas fa-chevron-down' />
         </div>
-        <i className='fas fa-cog' />
+        <i className='fas fa-cog' onClick={onClickSettingButton} />
+        {isDisplay && <SettingMenu setIsDisplay={onChangeIsDisplay} />}
       </div>
       <div className='user-list__users'>
         {Object.values(connectedUsers).map((user) => {

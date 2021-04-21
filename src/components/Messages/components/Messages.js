@@ -1,3 +1,4 @@
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 
 import Header from "./Header";
@@ -5,14 +6,26 @@ import Footer from "./Footer";
 import Message from "./Message";
 import "../styles/_messages.scss";
 
+import useMessageListAutoScrollBottom from "../../../hooks/useMessageListAutoScrollBottom"
+
 function Messages() {
   const activeUser = useSelector((state) => state.coreLayout.activeUser);
   const messageListId = useSelector((state) => state.message.messageListId);
   const messageData = useSelector((state) => state.message.messageData);
+  const messageListRef = useRef(null);
+  // useEffect(() => {
+  //   if (messageListRef) {
+  //     messageListRef.current.addEventListener('DOMNodeInserted', (event) => {
+  //       const { currentTarget: target } = event;
+  //       target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
+  //     });
+  //   }
+  // }, [activeUser])
+  useMessageListAutoScrollBottom(messageListRef, activeUser)
   return (
     <div className='messages'>
       <Header activeUser={activeUser} />
-      <div className='messages__list' id='message-list'>
+      <div ref={messageListRef} className='messages__list' id='message-list'>
         {messageListId[activeUser.userId] &&
           messageListId[activeUser.userId].map((messageId) => {
             return (
