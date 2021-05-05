@@ -132,6 +132,7 @@
     &__actions {
       display: flex;
       align-items: center;
+      position: relative;
 
       @media only screen and (max-width: 700px) {
         margin-left: auto;
@@ -242,5 +243,20 @@
       background: white;
       color: #29475c;
     }
+  }
+}
+.emojiPicker {
+  position: fixed;
+  width: 75%;
+  bottom: 100px;
+  margin: 0 0 0 -30px;
+}
+aside.emoji-picker-react {
+  width: 100% !important;
+}
+
+.fa-smile {
+  @media only screen and (max-width: 1024px) {
+    display: none;
   }
 }

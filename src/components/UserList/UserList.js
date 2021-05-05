@@ -15,7 +15,9 @@ function User({ user }) {
   const [isUnreadMessage, setIsUnReadMessage] = useState(false);
   useEffect(() => {
     console.log(user.name + "update");
-    if (activeUser != user) setIsUnReadMessage(true);
+    if (activeUser != user && messageListId[user.userId]) {
+      setIsUnReadMessage(true)
+    };
   }, [messageListId[user.userId]]);
 
   useEffect(() => {
