@@ -1,8 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  decryptMessageWithPrivateKey,
-  decryptMessageWithAESKey,
-} from "../../tools/index";
 
 export const MessageSlice = createSlice({
   name: "message",

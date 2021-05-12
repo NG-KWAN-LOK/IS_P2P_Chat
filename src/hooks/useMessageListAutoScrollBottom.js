@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-const useMessageListAutoScrollBottom = (ref, activeUser) => {
+const useMessageListAutoScrollBottom = (ref, activeUser, isToBottom) => {
     useEffect(() => {
         if (ref) {
             ref.current.addEventListener('DOMNodeInserted', (event) => {
@@ -14,7 +14,7 @@ const useMessageListAutoScrollBottom = (ref, activeUser) => {
                 target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
             });
         }
-    }, [activeUser])
+    }, [activeUser, isToBottom])
 }
 
 export default useMessageListAutoScrollBottom

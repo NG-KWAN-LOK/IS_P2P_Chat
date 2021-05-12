@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import Header from "./Header";
 import Footer from "./Footer";
 import Message from "./Message";
+import ToBottomButtom from "./ToBottomButtom";
 import "../styles/_messages.scss";
 
 import useMessageListAutoScrollBottom from "../../../hooks/useMessageListAutoScrollBottom"
@@ -13,15 +14,7 @@ function Messages() {
   const messageListId = useSelector((state) => state.message.messageListId);
   const messageData = useSelector((state) => state.message.messageData);
   const messageListRef = useRef(null);
-  // useEffect(() => {
-  //   if (messageListRef) {
-  //     messageListRef.current.addEventListener('DOMNodeInserted', (event) => {
-  //       const { currentTarget: target } = event;
-  //       target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
-  //     });
-  //   }
-  // }, [activeUser])
-  useMessageListAutoScrollBottom(messageListRef, activeUser)
+  useMessageListAutoScrollBottom(messageListRef, activeUser, null)
   return (
     <div className='messages'>
       <Header activeUser={activeUser} />
@@ -38,7 +31,8 @@ function Messages() {
             );
           })}
       </div>
-      <Footer />
+      <ToBottomButtom />
+      <Footer messageListRef={messageListRef} />
     </div>
   );
 }

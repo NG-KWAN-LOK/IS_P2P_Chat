@@ -16,7 +16,7 @@ import {
   encryptMessageWithAESKey,
   decryptMessageWithAESKey,
   generateAESKeys,
-} from "../../tools/index";
+} from "../../tools/AES";
 import config from "../../config";
 
 import {
@@ -30,9 +30,11 @@ import {
   PRIVATE_MESSAGE,
   NEW_CHAT_USER,
 } from "../../constants/Events";
-const socketUrl = "/";
+const socketUrl = "http://localhost:4000";
 
-export const SocketContext = React.createContext({});
+export const SocketContext = React.createContext({
+  sendMessage: (message) => { }
+});
 
 export const useSocket = () => {
   const [isFocus, setIsFocus] = useState(true);
@@ -82,7 +84,7 @@ export const useSocket = () => {
 
     const onFocus = () => {
       setIsFocus(true);
-      document.title = "Chatter";
+      document.title = "Messager";
     };
     const outFocus = () => {
       setIsFocus(false);
@@ -98,7 +100,7 @@ export const useSocket = () => {
   useEffect(() => {
     console.log("isFocus?" + isFocus);
     if (!isFocus) {
-      document.title = "🔴 Chatter";
+      document.title = "🔴 Messager";
       playMessageIncome();
     }
   }, [messageListId]);
