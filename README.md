@@ -1,7 +1,8 @@
 # IS_P2P_Chat
+
 ## heroku app page
 
-### https://is-real-time-chatting.herokuapp.com/
+### https://messager.sawajiri-ng.net/
 
 ## Installation
 

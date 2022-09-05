@@ -14,7 +14,6 @@
     "crypto-js": "^4.0.0",
     "emoji-picker-react": "^3.4.4",
     "eth-crypto": "^1.9.0",
-    "node-sass": "5.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.3",
@@ -22,21 +21,28 @@
     "react-scripts": "^4.0.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "sass": "^1.54.8",
     "socket.io": "^4.0.1",
     "socket.io-client": "^3.1.3",
+    "type-fest": "^0.21.3",
     "typescript": "^4.2.4",
     "use-sound": "^2.0.1",
     "uuid": "^8.3.2",
     "uuidv4": "^6.2.7",
     "web-vitals": "^0.2.4"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "postinstall": "npm run build",
-    "start": "node src/server/index2.js",
+    "start": "node app.js",
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "socket": "node src/server/index.js",
+    "deploy": "gcloud app deploy app.yaml --version=default --project=messager-361614 --no-promote -v master"
   },
   "eslintConfig": {
     "extends": [

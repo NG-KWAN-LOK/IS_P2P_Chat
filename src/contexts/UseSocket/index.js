@@ -30,7 +30,9 @@ import {
   PRIVATE_MESSAGE,
   NEW_CHAT_USER,
 } from "../../constants/Events";
-const socketUrl = "/";
+const socketUrl = process.env.REACT_APP_SOCKET_URL;
+
+console.log(socketUrl);
 
 export const SocketContext = React.createContext({
   sendMessage: (message) => {},
